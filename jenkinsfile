@@ -12,6 +12,10 @@ node{
   checkout scm
 
   //Stage 1 : Build the docker image.
+  stage('Initialize'){
+          def dockerHome = tool 'mydocker'
+          env.PATH = "${dockerHome}/bin:${env.PATH}"
+      }
   stage('Build image jenKINNNS') {
       sh("docker build -t ${imageTag} .")
   }
