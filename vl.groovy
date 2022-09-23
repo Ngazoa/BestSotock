@@ -1,19 +1,20 @@
 pipeline {
     environment {
-        dockerImagename = "imagename/stock-Devops"
+        dockerImagename = "stock-Devops"
         dockerImage = ""
     }
 
     agent any
     tools{
         maven '3.8.6'
+        'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
     }
     stages {
         stage('create and build maven project'){
             steps{
                 script{
                     checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'jenkinsserviceaccount', url: 'https://github.com/Ngazoa/BestSotock.git']]])
-               sh 'mvn clean install'
+               //sh 'mvn clean install'
                 }
             }
         }
