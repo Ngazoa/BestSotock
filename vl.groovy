@@ -1,16 +1,27 @@
 pipeline {
     environment {
-        dockerImagename = "stock/gitimage"
+        dockerImagename = "imagename/stock-Devops"
         dockerImage = ""
     }
-    agent any
 
+    agent any
+    tools{
+        maven '3.8.6'
+    }
     stages {
-        stage('load git stock repository') {
-            steps {
-                git 'https://github.com/Ngazoa/BestSotock.git'
+        stage('create and build maven project'){
+            steps{
+                script{
+                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'jenkinsserviceaccount', url: 'https://github.com/Ngazoa/BestSotock.git']]])
+               sh 'mvn clean install'
+                }
             }
         }
+//        stage('load git stock repository') {
+//            steps {
+//                git 'https://github.com/Ngazoa/BestSotock.git'
+//            }
+//        }
 
 
 

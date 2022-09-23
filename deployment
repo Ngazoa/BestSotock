@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: recruitment-service
-        image: gcr.io/bats-qa/stock-service:development
+        image: imagename/stock-Devops
         ports:
         - containerPort: 8081
 
