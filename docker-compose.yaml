@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  product-service:
+    image: com.example/product-service:latest
+    container_name: product-service
+    build:
+      context: ./product-service
+      args:
+        - APP_NAME=product-service
+        - APP_VERSION=0.0.1
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    expose:
+      - 8081
+    ports:
+      - 8081:8081
+  review-service:
+    image: com.example/review-service:latest
+    container_name: review-service
+    build:
+      context: ./review-service
+      args:
+        - APP_NAME=review-service
+        - APP_VERSION=0.0.1
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    expose:
+      - 8082
+    ports:
+      - 8082:8082
