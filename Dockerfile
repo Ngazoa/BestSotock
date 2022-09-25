@@ -7,7 +7,7 @@ RUN mvn clean install
 
 
 FROM openjdk:8-jdk-alpine
-COPY from=build /opt/app/target/*.jar app.jar/
+COPY --from=build /opt/app/target/*.jar app.jar
 
 ENV PORT 5000
 EXPOSE $PORT
