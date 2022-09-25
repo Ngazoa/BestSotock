@@ -41,7 +41,6 @@ def dockerImageTag="springboot-deploy${env.BUILD_NUMBER}"
          branch:'master'
       }
   stage('Build image jenKINNNS') {
-      sh 'mvn clean install'
       sh("docker build -t ${imageTag} .")
   }
 
