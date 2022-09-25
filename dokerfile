@@ -1,8 +1,15 @@
-FROM adoptopenjdk/openjdk8:alpine-jre
+FROM maven:3-jdk8:alpine AS build
 
-ARG APP_NAME="product-service"
-ARG APP_VERSION="0.0.1"
-ARG JAR_FILE="/build/libs/${APP_NAME}-${APP_VERSION}.jar"
+WORKDIR /opt/app
 
-COPY ${JAR_FILE} app.jar
+COPY ./ /opt/app
+RUN mvn clean install
+
+
+FROM openjdk8:alpine AS build
+COPY from=build /opt/app/target/*.jar app.jar
+
+ENV PORT 5000
+EXPOSE $PORT
+
 ENTRYPOINT ["java","-jar", "app.jar"]
