@@ -5,7 +5,7 @@ def dockerImageTag="springboot-deploy${env.BUILD_NUMBER}"
 
   try{
       stage("Git Clone Repository"){
-         git url:''
+         git url:'https://github.com/Ngazoa/BestSotock.git'
          credentielsId:'springboot-deploy-user'
          branch:'master'
       }
