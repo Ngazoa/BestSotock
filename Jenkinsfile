@@ -1,8 +1,8 @@
-node{
+pipeline{
 
-def WORKSPACE="/var/lib/jenkins/workspace/springboot-deploy"
-def dockerImageTag="springboot-deploy${env.BUILD_NUMBER}"
-
+// def WORKSPACE="/var/lib/jenkins/workspace/springboot-deploy"
+// def dockerImageTag="springboot-deploy${env.BUILD_NUMBER}"
+//
 
 
 //       stage('Buid Docker Image '){
@@ -19,13 +19,14 @@ def dockerImageTag="springboot-deploy${env.BUILD_NUMBER}"
 
 
   //Define all variables
-  def project = 'my-project'
-  def appName = 'my-first-microservice'
-  def serviceName = "${appName}-backend"
-  def imageVersion = 'development'
-  def namespace = 'development'
-  def imageTag = "gcr.io/${project}/${appName}:${imageVersion}.${env.BUILD_NUMBER}"
-
+      environment {
+   project = 'my-project'
+   appName = 'my-first-microservice'
+   serviceName = "${appName}-backend"
+    imageVersion = 'development'
+  namespace = 'development'
+   imageTag = "gcr.io/${project}/${appName}:${imageVersion}.${env.BUILD_NUMBER}"
+}
   //Checkout Code from Git
   //checkout scm
 
@@ -35,14 +36,31 @@ def dockerImageTag="springboot-deploy${env.BUILD_NUMBER}"
 //           env.PATH = "${dockerHome}/bin:${env.PATH}"
 //       }
 
- stage("Git Clone Repository"){
-         git url:'https://github.com/Ngazoa/BestSotock.git'
-         credentielsId:'springboot-deploy-user'
-         branch:'master'
-      }
-  stage('Build image jenKINNNS') {
-      sh("docker build -t ${imageTag} .")
-  }
+ stages {
+        stage('create and build maven project'){
+            steps{
+                script{
+                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'jenkinsserviceaccount', url: 'https://github.com/Ngazoa/BestSotock.git']]])
+               //sh 'mvn clean install'
+                }
+            }
+        }
+        stage('create Docker Image') {
+            steps {
+                script {
+                    dockerImage = docker.build imageTag
+                }
+            }
+        }
+
+//  stage("Git Clone Repository"){
+//          git url:'https://github.com/Ngazoa/BestSotock.git'
+//          credentielsId:'springboot-deploy-user'
+//          branch:'master'
+//       }
+//   stage('Build image jenKINNNS') {
+//       sh("docker build -t ${imageTag} .")
+//   }
 
   //Stage 2 : Push the image to docker registry
 
@@ -61,7 +79,6 @@ def dockerImageTag="springboot-deploy${env.BUILD_NUMBER}"
       }
       stage('Deploying Stock app on kubernetes ') {
           steps {
-
               kubernetsDeploy(configs: "Deployment.yaml", kubeconfig: "kubernetId")
           }
       }
