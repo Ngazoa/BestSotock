@@ -6,7 +6,7 @@ COPY ./ /opt/app
 RUN mvn clean install
 
 
-FROM openjdk-8-alpine
+FROM openjdk:8-jdk-alpine
 COPY from=build /opt/app/target/*.jar app.jar/
 
 ENV PORT 5000
