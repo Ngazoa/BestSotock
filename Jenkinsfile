@@ -3,7 +3,7 @@ node{
 def WORKSPACE="/var/lib/jenkins/workspace/springboot-deploy"
 def dockerImageTag="springboot-deploy${env.BUILD_NUMBER}"
 
-  try{
+
 
 //       stage('Buid Docker Image '){
 //            dockerImage=docker.build("springboot-deploy:${env.BUILD_NUMBER}")
@@ -86,7 +86,5 @@ stage("Git Clone Repository"){
                    sh("echo http://`kubectl --namespace=${namespace} get service/${feSvcName} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
                    break
   }
- }catch(e){
 
-  }
 }
