@@ -85,6 +85,7 @@ stage("Git Clone Repository"){
                    sh("kubectl --namespace=${namespace} apply -f k8s/development/deploymentService.yaml")
                    sh("echo http://`kubectl --namespace=${namespace} get service/${feSvcName} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
                    break
-  }
+          }
 
+       }
 }
