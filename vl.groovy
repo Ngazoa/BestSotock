@@ -1,59 +1,105 @@
 pipeline {
+
+
     environment {
-        dockerImagename = "stock-Devops"
-        dockerImage = ""
+
+
+        registry = "benito2000/my-first-microservice"
+
+
+        registryCredential = 'dockerhub_id'
+
+
+        dockerImage = ''
+
+
     }
+
 
     agent any
-    tools{
-        maven '3.8.6'
-       // 'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
-    }
+
+
     stages {
-        stage('create and build maven project'){
-            steps{
-                script{
-                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'jenkinsserviceaccount', url: 'https://github.com/Ngazoa/BestSotock.git']]])
-               //sh 'mvn clean install'
-                }
-            }
-        }
-//        stage('load git stock repository') {
-//            steps {
-//                git 'https://github.com/Ngazoa/BestSotock.git'
-//            }
-//        }
 
 
+        stage('Cloning our Git') {
 
-        stage('create Docker Image') {
+
             steps {
+
+
+                git 'https://github.com/Ngazoa/BestSotock.git'
+
+
+            }
+
+
+        }
+
+
+        stage('Building our image') {
+
+
+            steps {
+
+
                 script {
-                    dockerImage = docker.build dockerImagename
+
+
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+
+
                 }
+
+
             }
+
+
         }
 
 
-    stage('Push docker Image'){
-        environment {
-            registryCredential = 'dockerStockImage'
-        }
-        steps {
-            script {
-                docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                    dockerImage.push("latest")
+        stage('Deploy our image') {
+
+
+            steps {
+
+
+                script {
+
+
+                    docker.withRegistry('', registryCredential) {
+
+
+                        dockerImage.push()
+
+
+                    }
+
+
                 }
+
+
             }
-        }
-    }
-    stage('Deploying Stock app on kubernetes ') {
-        steps {
 
-            kubernetsDeploy(configs: "Deployment.yaml", kubeconfig: "kubernetId")
-        }
-    }
-}
-}
 
+        }
+
+
+        stage('Cleaning up') {
+
+
+            steps {
+
+
+                sh "docker rmi $registry:$BUILD_NUMBER"
+
+
+            }
+
+
+        }
+
+    }
+
+}
 
