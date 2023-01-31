@@ -17,7 +17,8 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <mainClass>org.akouma.stock.StockMainClass</mainClass>
+        
+               <start-class>org.akouma.stock.StockMainClass</start-class>
     </properties>
 
     <dependencyManagement>
