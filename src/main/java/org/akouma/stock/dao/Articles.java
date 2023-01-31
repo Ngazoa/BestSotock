@@ -1,6 +1,5 @@
 package org.akouma.stock.dao;
 
-import com.amazonaws.services.dynamodbv2.xspec.B;
 import org.akouma.stock.entity.Boutique;
 import org.akouma.stock.entity.CathegorieArticle;
 import org.akouma.stock.entity.Fournisseur;
