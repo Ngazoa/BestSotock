@@ -22,7 +22,7 @@ spec:
         app: infotrends
     spec:
       containers:
-        - image: vicky2911/springboot-v1:latest
+        - image: benito2000/springboot-v1:latest
           imagePullPolicy: Always
           name: infotrends
           ports:
@@ -68,7 +68,7 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: springboot-v1
+  name: Springboot-V1
   namespace: default
 spec:
   maxReplicas: 3
