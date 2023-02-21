@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: my-app
-          image: my-registry.com/my-image:${BUILD_ID}
+          image: benito2000/springboot-v1:latest
           ports:
             - containerPort: 9000
           env:
