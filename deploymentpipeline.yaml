@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: infotrends
-  name: infotrends
+  name: springboot-v1
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -45,7 +45,7 @@ kind: Service
 metadata:
   labels:
     app: infotrends
-  name: infotrends
+  name: springboot-v1
   namespace: default
 spec:
   allocateLoadBalancerNodePorts: true
@@ -68,7 +68,7 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: springboot-v1
+  name: autoscaling
   namespace: default
 spec:
   maxReplicas: 3
@@ -78,7 +78,7 @@ spec:
     kind: Deployment
     name: springboot-v1
   targetCPUUtilizationPercentage: 70
-#
+
 #---
 #apiVersion: v1
 #kind: Service
@@ -89,7 +89,7 @@ spec:
 #externalName: host.docker.internal
 #ports:
 #  - port: 3306
-#
+
     
     
     
