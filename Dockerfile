@@ -5,8 +5,16 @@ USER spring:spring
 #COPY Stock-1.0-SNAPSHOT.jar Stock-1.0-SNAPSHOT.jar
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} Stock-1.0-SNAPSHOT.jar
+COPY mysql.cnf /etc/mysql/conf.d/
+
+RUN apt-get update && apt-get install -y mysql-client && apt-get clean
+
+    ENV MYSQL_DATABASE=akouma_stock
+    ENV MYSQL_USER=root
+    ENV MYSQL_PASSWORD=
+    ENV MYSQL_ROOT_PASSWORD=
 #ENTRYPOINT ["java","-jar","/Stock-1.0-SNAPSHOT.jar"]
-ENTRYPOINT ["java","-jar","Stock-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","Stock-1.0-SNAPSHOT.jar","--spring.datasource.url=jdbc:mysql://localhost:3306/akouma_stock?useSSL=false"]
 
 
 # FROM adoptopenjdk/openjdk8:alpine-jre
