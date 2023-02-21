@@ -45,7 +45,7 @@ kind: Service
 metadata:
   labels:
     app: infotrends
-  name: springboot-v2
+  name: infotrends
   namespace: default
 spec:
   allocateLoadBalancerNodePorts: true
