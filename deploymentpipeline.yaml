@@ -45,7 +45,7 @@ kind: Service
 metadata:
   labels:
     app: infotrends
-  name: springboot-v1
+  name: springboot-v2
   namespace: default
 spec:
   allocateLoadBalancerNodePorts: true
@@ -78,18 +78,18 @@ spec:
     kind: Deployment
     name: springboot-v1
   targetCPUUtilizationPercentage: 70
-
----
-apiVersion: v1
-kind: Service
-metadata:
-name: mysqldb
-spec:
-type: ExternalName
-externalName: host.docker.internal
-ports:
-  - port: 3306
-    
+#
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: mysqldb
+#spec:
+#type: ExternalName
+#externalName: host.docker.internal
+#ports:
+#  - port: 3306
+#
     
     
     
