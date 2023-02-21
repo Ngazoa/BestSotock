@@ -45,8 +45,8 @@ kind: Service
 metadata:
   labels:
     app: infotrends
-  name: springboot-v2
-  namespace: springboot-v2
+  name: infotrends
+  namespace: infotrends
 spec:
   allocateLoadBalancerNodePorts: true
   externalTrafficPolicy: Cluster
@@ -69,7 +69,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: springboot-v1
-  namespace: autoscaling
+  namespace: springboot-v1
 spec:
   maxReplicas: 3
   minReplicas: 1
