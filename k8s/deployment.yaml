@@ -3,8 +3,8 @@ kind: Deployment
 metadata:
   labels:
     app: infotrends
-  name: springboot-v1
-  namespace: springboot-v1
+  name: infotrends
+  namespace: infotrends
 spec:
   progressDeadlineSeconds: 600
   replicas: 3
