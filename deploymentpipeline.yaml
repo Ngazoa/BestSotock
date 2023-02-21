@@ -17,17 +17,11 @@ spec:
           image: benito2000/springboot-v1:latest
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://mysql-instance:3306/akouma_stock?useSSL=false&allowPublicKeyRetrieval=true
+              value: jdbc:mysql://mysql-service:3306/akouma_stock?useSSL=false
             - name: SPRING_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: db-secret
-                  key: root
+              value: root
             - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-secret
-                  key:
+              value:
           ports:
             - containerPort: 9000
       imagePullSecrets:
