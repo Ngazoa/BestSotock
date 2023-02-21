@@ -68,7 +68,7 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: Springboot-V1
+  name: springboot-v1
   namespace: default
 spec:
   maxReplicas: 3
