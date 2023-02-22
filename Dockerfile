@@ -8,7 +8,7 @@ ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} Stock-1.0-SNAPSHOT.jar
 COPY mysql.cnf /etc/mysql/conf.d/
 
-RUN apk update && apk install -y mysql-client && apk clean
+RUN apk update && apk add mysql-client
 
     ENV MYSQL_DATABASE=akouma_stock
     ENV MYSQL_USER=root
