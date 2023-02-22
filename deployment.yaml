@@ -23,15 +23,9 @@ spec:
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:mysql://localhost:3306/akouma_stock"
             - name: SPRING_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: my-secret
-                  key: root
+              value: root
             - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: my-secret
-                  key:
+              value:
 
 
 
