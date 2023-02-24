@@ -1,21 +1,20 @@
-FROM adoptopenjdk/openjdk11:jre-11.0.6_10-alpine
-EXPOSE 9000
-RUN addgroup -S spring && adduser -S spring -G spring
-# USER spring:spring
-USER root
-#COPY Stock-1.0-SNAPSHOT.jar Stock-1.0-SNAPSHOT.jar
+FROM openjdk:11-jdk-slim
+VOLUME /tmp
 ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} Stock-1.0-SNAPSHOT.jar
-COPY mysql.cnf /etc/mysql/conf.d/
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
 
-RUN apk update && apk add mysql-client
-
-    ENV MYSQL_DATABASE=akouma_stock
-    ENV MYSQL_USER=root
-    ENV MYSQL_PASSWORD=
-    ENV MYSQL_ROOT_PASSWORD=
-#ENTRYPOINT ["java","-jar","/Stock-1.0-SNAPSHOT.jar"]
-ENTRYPOINT ["java","-jar","Stock-1.0-SNAPSHOT.jar","--spring.datasource.url=jdbc:mysql://localhost:3306/akouma_stock?useSSL=false"]
+# FROM adoptopenjdk/openjdk11:jre-11.0.6_10-alpine
+# EXPOSE 9000
+# RUN addgroup -S spring && adduser -S spring -G spring
+# # USER spring:spring
+# VOLUME /tmp
+# #COPY Stock-1.0-SNAPSHOT.jar Stock-1.0-SNAPSHOT.jar
+# ARG JAR_FILE=target/*.jar
+# COPY ${JAR_FILE} Stock-1.0-SNAPSHOT.jar
+#
+# #ENTRYPOINT ["java","-jar","/Stock-1.0-SNAPSHOT.jar"]
+# ENTRYPOINT ["java","-jar","Stock-1.0-SNAPSHOT.jar"]
 
 
 # FROM adoptopenjdk/openjdk8:alpine-jre

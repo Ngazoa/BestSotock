@@ -1,32 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
+  name: myapp
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: my-app
+      app: myapp
   template:
     metadata:
       labels:
-        app: my-app
+        app: myapp
     spec:
       containers:
-        - name: my-app
+        - name: myapp
           image: benito2000/springboot-v1:latest
           ports:
             - containerPort: 8080
-          env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: "production"
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:mysql://localhost:3306/akouma_stock"
-            - name: SPRING_DATASOURCE_USERNAME
-              value: root
-            - name: SPRING_DATASOURCE_PASSWORD
-              value:
-
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: myapp-config
 
 
 #apiVersion: apps/v1
