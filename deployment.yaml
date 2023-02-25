@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: myapp
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
       app: myapp
@@ -17,14 +17,29 @@ spec:
           image: benito2000/springboot-v1:latest
           ports:
             - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: myapp-config
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value:
+            - name: MYSQL_DATABASE
+              value: akouma_stock
+            - name: MYSQL_USER
+              value: root
+            - name: MYSQL_PASSWORD
+              value:
+          ports:
+            - containerPort: 3306
           volumeMounts:
-            - name: config-volume
-              mountPath: /app/config
+            - name: mysql-data
+              mountPath: /var/lib/mysql
       volumes:
-        - name: config-volume
-          configMap:
-            name: myapp-config
-
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
 
 #apiVersion: apps/v1
 #kind: Deployment
